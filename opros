@@ -1,0 +1,124 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import*
+from random import shuffle
+
+app = QApplication([])
+window = QWidget()
+
+window.setWindowTitle('Паша бот?')
+window.resize(400, 400)
+
+que = QLabel('Введите текст бот')
+pon_ans = QGroupBox('Ну так чо по факту говори')
+pon_res = QGroupBox('Ну короче чо получилось')
+batonchisto = QPushButton('Базар')
+
+otvetka1 = QRadioButton('Ответка №1 ДА ПАША БОТ ЗАФАЛЩЗФАЛЩЗФ')
+otvetka2 = QRadioButton('Ответка №2 Нет это ты ботяра слитая')
+otvetka3 = QRadioButton('Ответка №3 Боже чельй сивай пжфлд')
+otvetka4 = QRadioButton('Ответка №4 Да')
+
+resurs = QLabel('Правильно/Боже нет, ливай')
+right_ans = QLabel('По фактам')
+
+krins1 = QHBoxLayout()
+krins2 = QHBoxLayout()
+krins3 = QHBoxLayout()
+choosobennau = QVBoxLayout()
+
+krins4 = QHBoxLayout()
+krins5 = QHBoxLayout()
+choosobennau1 = QVBoxLayout()
+
+choosobennau2 = QVBoxLayout()
+
+krins4.addWidget(otvetka1)
+krins4.addWidget(otvetka2)
+krins5.addWidget(otvetka3)
+krins5.addWidget(otvetka4)
+
+choosobennau1.addLayout(krins4)
+choosobennau1.addLayout(krins5)
+
+pon_ans.setLayout(choosobennau1)
+
+choosobennau2.addWidget(resurs)
+choosobennau2.addWidget(right_ans)
+
+pon_res.setLayout(choosobennau2)
+
+krins1.addWidget(que)
+krins2.addWidget(pon_ans)
+krins2.addWidget(pon_res)
+krins3.addWidget(batonchisto)
+
+choosobennau.addLayout(krins1)
+choosobennau.addLayout(krins2)
+choosobennau.addLayout(krins3)
+
+window.setLayout(choosobennau)
+
+pon_res.hide()
+
+def pon_res_show():
+    pon_ans.hide()
+    pon_res.show()
+    batonchisto.setText('Next ответка пон')
+
+def pon_ans_show():
+    pon_res.hide()
+    pon_ans.show()
+    batonchisto.setText('Базар')
+
+def analysis_click():
+    if batonchisto.text()  == 'Базар':
+        chekai_otvetky()
+    else:
+        ask_que()
+
+batonchisto.clicked.connect(analysis_click)
+
+class QueInfo:
+    def __init__(self, que, right, wrong1, wrong2, wrong3):
+        self.que = que
+        self.right = right
+        self.wrong1 = wrong1
+        self.wrong2 = wrong2
+        self.wrong3 = wrong3
+
+lst_UwU = []
+
+U = QueInfo('Gfif kj[?', 'Lf', 'Ytn', 'PON', 'TYROOOON')
+lst_UwU.append(U)
+
+U = QueInfo('Шариш за альт?', '1000-7', 'Crjkmrj cv', 'АХАХААХПХАПХПХАПХАПХАППХАХП', 'HA-HA')
+lst_UwU.append(U)
+
+lst_OwO = [otvetka1, otvetka2, otvetka3, otvetka4]
+
+def ask_que():
+    shuffle(lst_UwU)
+    queqw = lst_UwU[0]
+
+    shuffle(lst_OwO)
+    lst_OwO[0].setText(queqw.right)
+    lst_OwO[1].setText(queqw.wrong1)
+    lst_OwO[2].setText(queqw.wrong2)
+    lst_OwO[3].setText(queqw.wrong3)
+
+    que.setText(queqw.que)
+    right_ans.setText(queqw.right)
+    pon_ans_show()
+
+def chekai_otvetky():
+    if lst_UwU[0].isChecked():
+            resurs.setText('ОК')
+            pon_ans_show()
+    if lst_UwU[1].isChecked() or lst_UwU[2].isChecked() or lst_UwU[3].isChecked():
+            resurs.setText('ЛОХ ХАХААХХАХАХАХАХАХАХААХХАХА')
+            pon_ans_show()
+
+ask_que()
+
+window.show()
+app.exec_()
